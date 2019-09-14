@@ -41,6 +41,6 @@ const animate = function() {
 animate();
 
 // load ground texture
-const texture = new THREE.TextureLoader().load("../img/arrow-pavement.jpg");
+const texture = new THREE.TextureLoader().load("img/arrow-pavement.jpg");
 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.set(12, 12);
