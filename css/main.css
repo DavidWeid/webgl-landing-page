@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-family: sans-serif;
 }
 
 .bar-top,
@@ -31,7 +32,6 @@ h1 {
   width: 100%;
   text-align: center;
   transform: translate(0, -100%);
-  font-family: sans-serif;
   font-weight: 100;
   letter-spacing: 40px;
   text-transform: uppercase;
