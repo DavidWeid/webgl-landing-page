@@ -37,6 +37,21 @@ const animate = function() {
   t.rotation.y -= 0.005;
   camera.lookAt(t.position);
   renderer.render(scene, camera);
+
+  for (let i = 0; i <= num; i++) {
+    const o = objects[i];
+    o.rotation.y += 0.01;
+    if (i % 2 == 0) {
+      o.radians += 0.005;
+      o.radians2 += 0.005;
+    } else {
+      o.radians -= 0.005;
+      o.radians2 -= 0.005;
+    }
+    o.position.x = Math.cos(o.radians) * o.distance;
+    o.position.z = Math.sin(o.radians) * o.distance;
+    o.position.y = Math.sin(o.radians2) * o.distance * 0.5;
+  }
 };
 
 // load ground texture
@@ -45,7 +60,10 @@ texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.set(12, 12);
 
 // create ground material
-const material = new THREE.MeshPhysicalMaterial({ map: texture, bumpMap: texture });
+const material = new THREE.MeshPhysicalMaterial({
+  map: texture,
+  bumpMap: texture
+});
 
 // create ground mesh
 const geometry = new THREE.PlaneBufferGeometry(100, 100);
@@ -75,6 +93,34 @@ const tetraMaterial = new THREE.MeshPhysicalMaterial({
 t = new THREE.Mesh(tetraGeometry, tetraMaterial);
 t.rotation.x = (Math.PI / 180) * -10;
 scene.add(t);
+
+// loop particles
+for (let i = 0; i <= num; i++) {
+  // create new mesh
+  const geometry = new THREE.SphereBufferGeometry(0.1, 6, 6);
+  const material = new THREE.MeshPhysicalMaterial({
+    envMap: envMap,
+    metalness: 1.0
+  });
+  const particle = new THREE.Mesh(geometry, material);
+
+  // set random position
+  particle.position.set(Math.random() * 100 - 50, 0, Math.random() * -10);
+  // calc distance as constant and assign
+  const a = new THREE.Vector3(0, 0, 0);
+  const b = particle.position;
+  var d = a.distanceTo(b);
+  particle.distance = d;
+
+  //define 2 random, constant angles
+  particle.radians = (Math.random() * 360 * Math.PI) / 180;
+  particle.radians2 = (Math.random() * 360 * Math.PI) / 180;
+
+  // add object to scene
+  scene.add(particle);
+  // add to collection
+  objects.push(particle);
+}
 
 // start animation loop
 animate();
