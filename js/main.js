@@ -34,6 +34,8 @@ scene.add(light);
 // animations can pause rendering when User stops viewing the tab
 const animate = function() {
   requestAnimationFrame(animate);
+  t.rotation.y -= 0.005;
+  camera.lookAt(t.position);
   renderer.render(scene, camera);
 };
 
