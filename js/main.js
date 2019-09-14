@@ -39,16 +39,13 @@ const animate = function() {
   renderer.render(scene, camera);
 };
 
-// start animation loop
-animate();
-
 // load ground texture
 const texture = new THREE.TextureLoader().load("img/arrow-pavement.jpg");
 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.set(12, 12);
 
 // create ground material
-material = new THREE.MeshPhysicalMaterial({ map: texture, bumpMap: texture });
+const material = new THREE.MeshPhysicalMaterial({ map: texture, bumpMap: texture });
 
 // create ground mesh
 const geometry = new THREE.PlaneBufferGeometry(100, 100);
@@ -68,13 +65,16 @@ const envMap = new THREE.CubeTextureLoader()
   .load(["px.jpg", "nx.jpg", "py.jpg", "ny.jpg", "pz.jpg", "nz.jpg"]);
 
 // create tetrahedron
-const geometry = new THREE.TetrahedronBufferGeometry(2, 0);
-const material = new THREE.MeshPhysicalMaterial({
+const tetraGeometry = new THREE.TetrahedronBufferGeometry(2, 0);
+const tetraMaterial = new THREE.MeshPhysicalMaterial({
   map: objTexture,
   envMap: envMap,
   metalness: 1.0,
   roughness: 0.0
 });
-t = new THREE.Mesh(geometry, material);
+t = new THREE.Mesh(tetraGeometry, tetraMaterial);
 t.rotation.x = (Math.PI / 180) * -10;
 scene.add(t);
+
+// start animation loop
+animate();
