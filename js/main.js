@@ -44,3 +44,14 @@ animate();
 const texture = new THREE.TextureLoader().load("img/arrow-pavement.jpg");
 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.set(12, 12);
+
+// create ground material
+material = new THREE.MeshPhysicalMaterial({ map: texture, bumpMap: texture });
+
+// create ground mesh
+const geometry = new THREE.PlaneBufferGeometry(100, 100);
+const ground = new THREE.Mesh(geometry, material);
+ground.rotation.z = (Math.PI / 180) * -45;
+ground.rotation.x = (Math.PI / 180) * -90;
+ground.position.y = -2.0;
+scene.add(ground);
