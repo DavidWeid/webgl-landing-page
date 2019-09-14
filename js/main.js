@@ -55,3 +55,24 @@ ground.rotation.z = (Math.PI / 180) * -45;
 ground.rotation.x = (Math.PI / 180) * -90;
 ground.position.y = -2.0;
 scene.add(ground);
+
+// load object texture - add central 3D obj for focal interest
+const texture = new THREE.TextureLoader().load("img/rock-surface.jpg");
+
+// create an environment around object to be reflected on its surface
+// use CubeTextureLoader - six images that form a cube map
+const envMap = new THREE.CubeTextureLoader()
+  .setPath("img/")
+  .load(["px.jpg", "nx.jpg", "py.jpg", "ny.jpg", "pz.jpg", "nz.jpg"]);
+
+// create tetrahedron
+const geometry = new THREE.TetrahedronBufferGeometry(2, 0);
+const material = new THREE.MeshPhysicalMaterial({
+  map: texture,
+  envMap: envMap,
+  metalness: 1.0,
+  roughness: 0.0
+});
+t = new THREE.Mesh(geometry, material);
+t.rotation.x = (Math.PI / 180) * -10;
+scene.add(t);
